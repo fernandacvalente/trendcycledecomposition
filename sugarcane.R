@@ -18,6 +18,9 @@ library(ggplot2)
 ## Load data
 ## 
 
+
+firesc=fires[fires$CONFIDENCE>50 & substr(fires$ACQ_DATE,1,4)<2017 & substr(fires$ACQ_DATE,1,4)>2002,]
+
 ## Border of São Paulo state 
 border=shapesp@polygons
 bordersp=border[[1]]@Polygons[[1]]@coords
