@@ -13,7 +13,6 @@ library(splancs)
 library(xtable)
 library(zoo)
 library(ggplot2)
-#library(plotly)
 
 setwd("C:/Users/ferna/Documents/Doc USP/Espacial/sugarcane")
 #setwd("f:/dados/modisfires")
