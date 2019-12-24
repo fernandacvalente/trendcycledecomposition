@@ -5,4 +5,4 @@ The code reproduces the analyses in the paper
 
 Valente, F.; Laurini, M. (2019): Pre-Harvest Sugarcane Burning: a trend-cycle decomposition in spatio-temporal point process. (working in progress)
 
-MODIS thermal anomalies/fires database available via email (fernanda.valente@usp.br), if interested. 
+MODIS thermal anomalies/fires database available via email (fernanda.valente@usp.br) or at https://modis.gsfc.nasa.gov/data/dataprod/mod14.php, if interested. 
