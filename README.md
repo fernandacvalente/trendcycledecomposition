@@ -3,4 +3,4 @@ R code that perform inference procedures for the spatio-temporal point process a
 
 The code reproduces the analyses in the paper
 
-Valente, F.C., Laurini, M.P. (2019): Pre-Harvest Sugarcane Burning: a trend-cycledecomposition in spatio-temporal point process. (working in progress)
+Valente, F.C., Laurini, M.P. (2019): Pre-Harvest Sugarcane Burning: a trend-cycle decomposition in spatio-temporal point process. (working in progress)
