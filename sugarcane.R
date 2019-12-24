@@ -16,13 +16,7 @@ library(ggplot2)
 
 ##########################################################################################################
 ## Load data
-load("fires.RData") #MODIS fire
-load("land_cover_classification.RData") #MODIS land cover classification
-load("zoning.RData") #Sugarcane Agroecological Zoning for the production of ethanol and sugar
-load("
-
-
-firesc=fires[fires$CONFIDENCE>50 & substr(fires$ACQ_DATE,1,4)<2017 & substr(fires$ACQ_DATE,1,4)>2002,]
+load("cov.RData") #Load covariates
 
 ## Border of São Paulo state 
 border=shapesp@polygons
@@ -128,120 +122,6 @@ summary(e0 <- w.areas[agg.dat$area] * (w.t[agg.dat$time]))
 rwtime=agg.dat$time
 seastime=agg.dat$time
 artime=agg.dat$time
-
-##########################################################################################################
-## Setting covariates
-loci1=smesh$loc[agg.dat$area,1:2]
-vtime=agg.dat$time
-
-## Modis land cover classification is an yearly data. Turn it in quarterly data.
-index=vtime==1 | vtime==2 | vtime==3 | vtime==4
-ct1=loci1[index,]
-vsolo2003=extract(tsol2003,ct1)
-
-index=vtime==5 | vtime==6 | vtime==7 | vtime==8
-ct1=loci1[index,]
-vsolo2004=extract(tsol2004,ct1)
-
-index=vtime==9 | vtime==10 | vtime==11 | vtime==12
-ct1=loci1[index,]
-vsolo2005=extract(tsol2005,ct1)
-
-index=vtime==13 | vtime==14 | vtime==15 | vtime==16
-ct1=loci1[index,]
-vsolo2006=extract(tsol2006,ct1)
-
-index=vtime==16 | vtime==18 | vtime==19 | vtime==20
-ct1=loci1[index,]
-vsolo2007=extract(tsol2007,ct1)
-
-index=vtime==21 | vtime==22 | vtime==23 | vtime==24
-ct1=loci1[index,]
-vsolo2008=extract(tsol2008,ct1)
-
-index=vtime==25 | vtime==26 | vtime==27 | vtime==28
-ct1=loci1[index,]
-vsolo2009=extract(tsol2009,ct1)
-
-index=vtime==29 | vtime==30 | vtime==31 | vtime==32
-ct1=loci1[index,]
-vsolo2010=extract(tsol2010,ct1)
-
-index=vtime==33 | vtime==34 | vtime==35 | vtime==36
-ct1=loci1[index,]
-vsolo2011=extract(tsol2011,ct1)
-
-index=vtime==37 | vtime==38 | vtime==39 | vtime==40
-ct1=loci1[index,]
-vsolo2012=extract(tsol2012,ct1)
-
-index=vtime==41 | vtime==42 | vtime==43 | vtime==44
-ct1=loci1[index,]
-vsolo2013=extract(tsol2013,ct1)
-
-index=vtime==45 | vtime==46 | vtime==47 | vtime==48
-ct1=loci1[index,]
-vsolo2014=extract(tsol2014,ct1)
-
-index=vtime==49 | vtime==50 | vtime==51 | vtime==52
-ct1=loci1[index,]
-vsolo2015=extract(tsol2015,ct1)
-
-index=vtime==53 | vtime==54 | vtime==55 | vtime==56
-ct1=loci1[index,]
-vsolo2016=extract(tsol2016,ct1)
-
-vsolo=c(vsolo2003,vsolo2004,vsolo2005,vsolo2006,vsolo2007,vsolo2008,vsolo2009,vsolo2010,vsolo2011,vsolo2012,vsolo2013,
-        vsolo2014,vsolo2015,vsolo2016)
-vsolo2=vsolo==12*1
-
-## Köppen climate classification for São Paulo state
-koppen=extract(flk,loci1)
-
-## Maximum temperature for São Paulo state, using Laurini* (2019) method.
-vtemp=c()
-for (jj in 1:56){ #56 quarters
-  tempbr= raster("rastersudestetempmax.tif",band=168+jj) 
-  indextemp=vtime==jj
-  ct1=loci1[indextemp,]
-  vtempi=extract(tempbr,ct1)
-  vtemp=c(vtemp,vtempi)
-}
-
-## Rainfall for São Paulo state, using Laurini* (2019) method.
-vpluv=c()
-for (jj in 1:56){ #56 quarters
-  tempbr= raster("rastersudestepluv.tif",band=168+jj) 
-  indextemp=vtime==jj
-  ct1=loci1[indextemp,]
-  vpluvi=extract(tempbr,ct1)
-  vpluv=c(vpluv,vpluvi)
-}
-
-## Soil slope for São Paulo state
-decliv <- raster("declividade_br.asc")
-declivsp<-extract(decliv,loci1)
-dummydecliv = declivsp 
-dummydecliv[]<- ifelse(declivsp[]>12,1,0) #set as a dummy 
-
-## Sugarcane Agroecological Zoning for the production of ethanol and sugar
-zoning<- readOGR("ZoneamentoCana_4C.shp")
-zone<-extract(zoning,loci1)
-
-## Monthly global future price of sugar (U.S. centsper pound)
-library(xts)
-mprice<-read.table("sugar11.csv", sep=";", header=T)
-mpricet=ts(mprice[,2],frequency = 12, start = c(1990, 1))
-mpricetx=as.xts(mpricet)
-mpriceq=apply.quarterly(mpricetx, mean)
-ps=mpriceq[53:108,]
-
-price = as.matrix(agg.dat$time)
-vprice=c()
-for (jj in 1:56){
-  indexx = which(as.matrix(agg.dat$time)==jj)
-  price[indexx,]=as.numeric(ps)[jj]
-}
 
 ##########################################################################################################
 ## SPDE model with Matérn covariance structure
