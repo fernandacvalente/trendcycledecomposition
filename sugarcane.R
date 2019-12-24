@@ -190,7 +190,6 @@ vsolo=c(vsolo2003,vsolo2004,vsolo2005,vsolo2006,vsolo2007,vsolo2008,vsolo2009,vs
 vsolo2=vsolo==12*1
 
 ## Köppen climate classification for São Paulo state
-flk=raster("Koppen_Brazil_2013/Koppen Brazil 2013/Raster/koppen_paper/w001000.adf")
 koppen=extract(flk,loci1)
 
 ## Maximum temperature for São Paulo state, using Laurini* (2019) method.
