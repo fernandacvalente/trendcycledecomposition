@@ -16,7 +16,10 @@ library(ggplot2)
 
 ##########################################################################################################
 ## Load data
-## 
+load("fires.RData") #MODIS fire
+load("land_cover_classification.RData") #MODIS land cover classification
+load("zoning.RData") #Sugarcane Agroecological Zoning for the production of ethanol and sugar
+load("
 
 
 firesc=fires[fires$CONFIDENCE>50 & substr(fires$ACQ_DATE,1,4)<2017 & substr(fires$ACQ_DATE,1,4)>2002,]
