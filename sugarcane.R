@@ -17,6 +17,7 @@ library(ggplot2)
 ##########################################################################################################
 ## Load data
 load("cov.RData") #Load covariates
+load("shapesp.RData") #Load border of São Paulo state
 
 ## Border of São Paulo state 
 border=shapesp@polygons
